@@ -156,6 +156,85 @@ npx gh-pages -d out --dotfiles
 
 ---
 
+---
+
+## 2026-06-10 (추가 개발)
+
+### 플로팅 액션 버튼(FAB)
+
+히어로 섹션을 벗어난 뒤 퀵 액세스 수단을 제공하기 위해 FAB를 추가했습니다.
+
+**동작 설계**
+
+- `scrollY > window.innerHeight × 0.75` 조건으로 `opacity` 페이드인/아웃
+- 히어로로 돌아가면 메뉴 자동 닫힘
+- 데스크톱: `onMouseEnter/Leave`로 열기/닫기, 모바일: 탭으로 토글
+
+**서브버튼 부채꼴 배치**
+
+메인 FAB(56×56px) 중심에서 반경 80px, 세 방향으로 전개됩니다.
+
+| 버튼 | 아이콘 | 방향 | translate |
+|---|---|---|---|
+| QR 스캔 | `qr_code_2` | 위 | `(0, -80px)` |
+| 사진 업로드 | `upload` | 좌상 | `(-57px, -57px)` |
+| 폰트 검색 | `search` | 좌 | `(-80px, 0)` |
+
+열릴 때는 `cubic-bezier(0.34,1.56,0.64,1)` 스프링 바운스, 닫힐 때는 역순 stagger로 자연스럽게 접힙니다.
+
+**컬러 처리**
+
+메인 FAB 배경은 `var(--accent)` 공통 사용. 아이콘 색은 스킴별 accent 밝기에 따라 별도 오버라이드:
+- Blessing Sky / Misty Rose (연한 accent) → 어두운 아이콘
+- Cloud Again / Cloudy Apple / Snow Grey (진한 accent) → 흰 아이콘
+
+---
+
+### 히어로 네온 스캔 라인 효과
+
+손글씨·폰트 서비스 특유의 스캐닝 감성을 시각화하기 위해 히어로 배경에 수직 neon 라인 효과를 추가했습니다.
+
+**구현**
+
+- 90px 너비 div에 `linear-gradient(to right, ...)` 적용 — 양끝 투명, 중앙 흰빛 피크
+- `@keyframes heroScanSwipe` : `translateX(-90px) → translateX(calc(100vw + 90px))`
+- 7초 주기: 스캔 5.5초 + 정지 1.5초
+- `will-change: transform` + 부모 `overflow: hidden` 클리핑으로 성능 확보
+
+**스킴별 glow 색상 및 투명도**
+
+라이트 모드는 흰색 중심 + 컬러 배광(peak 0.31), 다크 모드는 컬러 glow 주도 + 흰색 센터(peak 0.30).
+
+| 스킴 | glow 색상 | 특이사항 |
+|---|---|---|
+| Blessing Sky | `rgb(162,182,138)` 올리브 그린 | accent `#aebba0`와 동일 계열 |
+| Misty Rose | `rgb(218,138,200)` 로즈 라벤더 | — |
+| Cloud Again | `rgb(78,130,214)` 클리어 블루 | — |
+| Cloudy Apple | `rgb(138,106,224)` 소프트 바이올렛 | — |
+| Snow Grey | `rgb(152,156,172)` 쿨 실버 | — |
+
+**아이콘 라이브러리 전환 이슈**
+
+초기에 Font Awesome으로 서브버튼 아이콘을 교체했다가, 기존 Material Symbols의 시각적 완성도가 더 높다는 판단으로 즉시 롤백했습니다. 결과적으로 Material Symbols Outlined(wght 300, FILL 0)를 유지하고, upload / search 아이콘만 교체했습니다.
+
+---
+
+### Blessing Sky 파인튜닝
+
+히어로 그라디언트를 채도·명도를 낮추는 방향으로 3단계 조정했습니다.
+
+| 단계 | 컬러 |
+|---|---|
+| 초기 | `#FDDB92 → #D1FDFF` |
+| 1차 조정 | `#FEF4DE → #E8FEFF` |
+| 최종 | `#FEE9BE → #E8FEFF` |
+
+채도를 낮춰 크림빛 톤을 강화하고, 우측 아쿠아(`#E8FEFF`)와의 온도 차이를 자연스럽게 유지했습니다.
+
+스캔 라인 glow도 초기 스카이 시안에서 포인트 컬러(올리브 그린 계열)로 변경하여 배경 컬러 톤과의 통일감을 높였습니다.
+
+---
+
 ### 향후 과제
 
 - [ ] 실제 AI 손글씨 분석 백엔드 연동
@@ -163,3 +242,4 @@ npx gh-pages -d out --dotfiles
 - [ ] 폰트 미리보기 커스텀 텍스트 입력
 - [ ] 모바일 반응형 레이아웃 개선
 - [ ] 업로드 → 분석 → 다운로드 전체 플로우 구현
+- [ ] FAB 서브버튼 실제 기능 연결 (QR 생성, 파일 업로드, 검색 페이지)

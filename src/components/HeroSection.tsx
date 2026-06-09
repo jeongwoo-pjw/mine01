@@ -22,6 +22,11 @@ export default function HeroSection() {
         alignItems: 'center',
       }}
     >
+      {/* ── Neon scan line ─────────────────────────────────────── */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <div className="hero-scan-line" />
+      </div>
+
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', width: '100%' }}>
         <div
           className="hero-grid"

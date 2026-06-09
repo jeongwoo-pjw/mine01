@@ -7,11 +7,13 @@ import FontGallery from '@/components/FontGallery';
 import StartSection from '@/components/StartSection';
 import Footer from '@/components/Footer';
 import FountainPenCursor from '@/components/FountainPenCursor';
+import FloatingActionButton from '@/components/FloatingActionButton';
 
 export default function Home() {
   return (
     <>
       <FountainPenCursor />
+      <FloatingActionButton />
       <Header />
       <main>
         <HeroSection />
