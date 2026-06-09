@@ -11,7 +11,7 @@ export default function QRSection() {
     });
   }, []);
 
-  const url = typeof window !== 'undefined' ? `${window.location.origin}/scan` : 'https://handfont.app/scan';
+  const url = 'https://jeongwoo-pjw.github.io/mine01/scan/';
 
   return (
     <div style={{
