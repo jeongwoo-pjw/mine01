@@ -296,20 +296,34 @@ export default function FontGallery() {
                     {font.downloads.toLocaleString()}
                   </span>
                 </div>
-                <button style={{
-                  background: 'var(--accent)',
-                  color: 'var(--ink)',
-                  border: 'none',
-                  borderRadius: 8,
-                  padding: '6px 14px',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  transition: 'background 0.2s',
-                }}>
+                <button
+                  className="dl-btn"
+                  style={{
+                    background: 'var(--accent)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '6px 14px',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    transition: 'background 0.22s, transform 0.18s, box-shadow 0.22s',
+                    boxShadow: '0 2px 8px rgba(28,46,80,0.18)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLButtonElement).style.background = 'var(--accent-hover)';
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 12px rgba(28,46,80,0.26)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLButtonElement).style.background = 'var(--accent)';
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 8px rgba(28,46,80,0.18)';
+                  }}
+                >
                   <Download size={13} />
                   다운로드
                 </button>

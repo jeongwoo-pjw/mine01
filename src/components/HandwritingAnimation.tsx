@@ -1,93 +1,99 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const TEXTS = [
-  '나만의 필기체',
-  'HandFont',
-  '손글씨 아트',
-  'My Style',
-  '오직 나만의 글씨',
+// 감성적인 손글씨 Google Fonts 샘플
+// 한글: Nanum Brush Script, Nanum Pen Script, Single Day
+// 영문: Dancing Script, Sacramento, Caveat, Satisfy, Shadows Into Light
+const SAMPLES = [
+  { text: '봄날의 기억처럼',        font: "'Nanum Brush Script', cursive", size: '1.85rem' },
+  { text: 'My Beautiful Story',   font: "'Dancing Script', cursive",      size: '1.75rem' },
+  { text: '나만의 손글씨체',        font: "'Nanum Pen Script', cursive",   size: '1.8rem'  },
+  { text: 'Write Your Heart',     font: "'Sacramento', cursive",          size: '1.9rem'  },
+  { text: '감성 필기체 폰트',       font: "'Single Day', cursive",         size: '1.75rem' },
+  { text: 'Handcrafted with Love',font: "'Satisfy', cursive",             size: '1.55rem' },
+  { text: '손끝에서 피어나는 글씨', font: "'Nanum Brush Script', cursive", size: '1.4rem'  },
+  { text: 'Memories in Ink',      font: "'Shadows Into Light', cursive",  size: '1.75rem' },
 ];
 
+const CHAR_MS   = 60;   // 타이핑 속도
+const PAUSE_MS  = 1800; // 완성 후 대기
+const DEL_MS    = 28;   // 지우기 속도
+
 export default function HandwritingAnimation() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [textIdx, setTextIdx] = useState(0);
-  const animRef = useRef<number | null>(null);
-  const progressRef = useRef(0);
+  const [idx, setIdx]         = useState(0);
+  const [shown, setShown]     = useState('');
+  const [phase, setPhase]     = useState<'type' | 'pause' | 'erase'>('type');
+
+  const sample = SAMPLES[idx];
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    let timer: ReturnType<typeof setTimeout>;
 
-    const text = TEXTS[textIdx];
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    const W = canvas.offsetWidth;
-    const H = canvas.offsetHeight;
-    const fontSize = Math.min(W * 0.13, 64);
-
-    ctx.clearRect(0, 0, W, H);
-
-    const totalFrames = 80;
-    progressRef.current = 0;
-
-    function draw() {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-
-      const progress = Math.min(progressRef.current / totalFrames, 1);
-
-      ctx.font = `${fontSize}px 'Caveat', cursive`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      const fullWidth = ctx.measureText(text).width;
-      const clipWidth = fullWidth * progress;
-      const startX = canvas.offsetWidth / 2 - fullWidth / 2;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(startX, 0, clipWidth, canvas.offsetHeight);
-      ctx.clip();
-
-      ctx.fillStyle = isDark ? 'rgba(226,232,244,0.92)' : 'rgba(28,46,80,0.82)';
-      ctx.fillText(text, canvas.offsetWidth / 2, canvas.offsetHeight / 2);
-
-      if (progress < 1) {
-        const cursorX = startX + clipWidth + 2;
-        ctx.fillStyle = isDark ? 'rgba(91,143,219,0.9)' : 'rgba(28,46,80,0.7)';
-        ctx.fillRect(cursorX, canvas.offsetHeight / 2 - fontSize * 0.55, 3, fontSize * 1.1);
-      }
-
-      ctx.restore();
-      progressRef.current += 1;
-
-      if (progressRef.current <= totalFrames + 20) {
-        animRef.current = requestAnimationFrame(draw);
+    if (phase === 'type') {
+      if (shown.length < sample.text.length) {
+        timer = setTimeout(
+          () => setShown(sample.text.slice(0, shown.length + 1)),
+          CHAR_MS,
+        );
       } else {
-        setTimeout(() => {
-          setTextIdx(i => (i + 1) % TEXTS.length);
-        }, 1800);
+        setPhase('pause');
+      }
+    } else if (phase === 'pause') {
+      timer = setTimeout(() => setPhase('erase'), PAUSE_MS);
+    } else {
+      if (shown.length > 0) {
+        timer = setTimeout(() => setShown(s => s.slice(0, -1)), DEL_MS);
+      } else {
+        setIdx(i => (i + 1) % SAMPLES.length);
+        setPhase('type');
       }
     }
 
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-    animRef.current = requestAnimationFrame(draw);
-
-    return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [textIdx]);
+    return () => clearTimeout(timer);
+  }, [shown, phase, sample, idx]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: '100%', height: 90, display: 'block' }}
-      aria-label="손글씨 애니메이션"
-    />
+    <div
+      style={{
+        height: 72,
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 2px',
+        minWidth: 0,
+      }}
+      aria-live="polite"
+      aria-label="손글씨 미리보기 애니메이션"
+    >
+      <span
+        style={{
+          fontFamily: sample.font,
+          fontSize: sample.size,
+          color: 'var(--text-primary)',
+          lineHeight: 1.1,
+          whiteSpace: 'nowrap',
+          display: 'inline-block',
+          letterSpacing: '0.01em',
+          transition: 'font-family 0.15s',
+        }}
+      >
+        {shown}
+      </span>
+
+      {/* 깜빡이는 커서 */}
+      <span
+        style={{
+          display: 'inline-block',
+          width: 2,
+          height: '1.25em',
+          background: 'var(--accent)',
+          borderRadius: 1,
+          marginLeft: 3,
+          verticalAlign: 'middle',
+          flexShrink: 0,
+          animation: 'blink 0.9s step-end infinite',
+          opacity: phase === 'pause' ? 0 : 1,
+        }}
+      />
+    </div>
   );
 }
