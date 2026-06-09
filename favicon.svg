@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDDB92"/>
+      <stop offset="100%" stop-color="#D1FDFF"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Pen group rotated -40deg around center (16,16) -->
+  <g transform="rotate(-40, 16, 16)">
+    <!-- Pen cap -->
+    <rect x="13" y="4" width="6" height="4" rx="2" fill="#2C3C20"/>
+    <!-- Pen body -->
+    <rect x="13" y="8" width="6" height="14" rx="1" fill="#3E5830"/>
+    <!-- Pen body shine -->
+    <rect x="14" y="9" width="1.5" height="12" rx="0.5" fill="rgba(255,255,255,0.22)"/>
+    <!-- Pen nib -->
+    <polygon points="13,22 19,22 16,28" fill="#242C20"/>
+    <!-- Nib center line -->
+    <line x1="16" y1="22" x2="16" y2="27" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+  </g>
+</svg>
