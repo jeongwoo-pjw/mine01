@@ -3,4 +3,4 @@
 :HL["https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600;700&family=East+Sea+Dokdo&family=Grandiflora+One&family=Klee+One:wght@400;600&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Pacifico&family=Pinyon+Script&family=Playwrite+NZ+Basic+Guides:wght@400&family=Sacramento&family=Satisfy&family=Shadows+Into+Light&family=Single+Day&display=swap","style"]
 :HL["https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&display=swap","style"]
 :HL["https://hangeul.naver.com/hangeul_static/css/clova-fonts.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"86nsDD6iuvSKjOXpoMkPP"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"DG9U890YX0iVG4kCxTJEe"}
