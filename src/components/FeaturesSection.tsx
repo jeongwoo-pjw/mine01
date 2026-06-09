@@ -4,37 +4,49 @@ import { Scan, Wand2, Download, Globe, Palette, Shield } from 'lucide-react';
 const FEATURES = [
   {
     icon: Scan,
-    color: '#EDD5B3',
+    bg: 'rgba(28,46,80,0.08)',
+    border: 'rgba(28,46,80,0.18)',
+    iconColor: 'var(--accent)',
     title: 'QR 스캔 업로드',
     desc: '스마트폰으로 QR 코드를 스캔하면 손글씨 템플릿이 바로 열립니다. 찍어서 올리면 끝.',
   },
   {
     icon: Wand2,
-    color: '#F0D060',
+    bg: 'rgba(182,189,200,0.18)',
+    border: 'rgba(182,189,200,0.40)',
+    iconColor: 'var(--steel)',
     title: 'AI 자동 변환',
     desc: '딥러닝 AI가 손글씨의 고유한 스타일을 분석하고 벡터 기반 폰트로 정밀 변환합니다.',
   },
   {
     icon: Palette,
-    color: '#B0B7C3',
+    bg: 'rgba(226,232,244,0.70)',
+    border: 'rgba(182,189,200,0.40)',
+    iconColor: 'var(--silver)',
     title: '스타일 편집',
     desc: '두께, 간격, 기울기, 장식 요소를 세밀하게 조정하여 나만의 완성도 높은 폰트를 만드세요.',
   },
   {
     icon: Download,
-    color: '#8B6347',
+    bg: 'rgba(28,46,80,0.08)',
+    border: 'rgba(28,46,80,0.18)',
+    iconColor: 'var(--accent)',
     title: 'OTF·TTF 다운로드',
     desc: '업계 표준 포맷으로 즉시 다운로드. Mac·Windows·모바일 어디서든 설치해 사용하세요.',
   },
   {
     icon: Globe,
-    color: '#F0D060',
+    bg: 'rgba(107,123,147,0.12)',
+    border: 'rgba(107,123,147,0.28)',
+    iconColor: 'var(--steel)',
     title: '웹폰트 CDN',
     desc: '웹사이트에 바로 삽입할 수 있는 CSS 코드와 CDN 링크를 자동으로 제공합니다.',
   },
   {
     icon: Shield,
-    color: '#B0B7C3',
+    bg: 'rgba(226,232,244,0.70)',
+    border: 'rgba(182,189,200,0.40)',
+    iconColor: 'var(--midnight)',
     title: '저작권 보호',
     desc: '생성된 폰트의 저작권은 사용자에게 귀속됩니다. 상업적 이용도 완전히 자유롭습니다.',
   },
@@ -64,7 +76,7 @@ export default function FeaturesSection() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 24,
+          gap: 20,
         }}>
           {FEATURES.map((f, i) => {
             const Icon = f.icon;
@@ -72,21 +84,18 @@ export default function FeaturesSection() {
               <div
                 key={f.title}
                 className="font-card fade-up"
-                style={{ animationDelay: `${i * 0.1}s` }}
+                style={{ animationDelay: `${i * 0.09}s` }}
               >
                 <div style={{
                   width: 48, height: 48, borderRadius: 14,
-                  background: `${f.color}30`,
+                  background: f.bg,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   marginBottom: 18,
-                  border: `1px solid ${f.color}60`,
+                  border: `1px solid ${f.border}`,
                 }}>
-                  <Icon size={22} color={f.color === '#B0B7C3' ? 'var(--metal-light)' : f.color === '#EDD5B3' ? 'var(--mocha)' : f.color} strokeWidth={1.8} />
+                  <Icon size={22} color={f.iconColor} strokeWidth={1.8} />
                 </div>
-                <h3 style={{
-                  fontSize: '1.08rem', fontWeight: 700,
-                  color: 'var(--text-primary)', marginBottom: 10,
-                }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10 }}>
                   {f.title}
                 </h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.68 }}>

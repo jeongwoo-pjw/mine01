@@ -56,12 +56,12 @@ export default function HandwritingAnimation() {
       ctx.rect(startX, 0, clipWidth, canvas.offsetHeight);
       ctx.clip();
 
-      ctx.fillStyle = isDark ? 'rgba(237,213,179,0.92)' : 'rgba(139,99,71,0.85)';
+      ctx.fillStyle = isDark ? 'rgba(226,232,244,0.92)' : 'rgba(28,46,80,0.82)';
       ctx.fillText(text, canvas.offsetWidth / 2, canvas.offsetHeight / 2);
 
       if (progress < 1) {
         const cursorX = startX + clipWidth + 2;
-        ctx.fillStyle = isDark ? 'rgba(240,208,96,0.9)' : 'rgba(139,99,71,0.8)';
+        ctx.fillStyle = isDark ? 'rgba(91,143,219,0.9)' : 'rgba(28,46,80,0.7)';
         ctx.fillRect(cursorX, canvas.offsetHeight / 2 - fontSize * 0.55, 3, fontSize * 1.1);
       }
 

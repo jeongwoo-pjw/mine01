@@ -1,28 +1,28 @@
 'use client';
 import { PenLine, Upload, QrCode, ArrowRight } from 'lucide-react';
-import QRSection from './QRSection';
+import dynamic from 'next/dynamic';
+
+const QRCode = dynamic(() => import('qrcode.react').then(m => m.QRCodeSVG), { ssr: false });
 
 export default function StartSection() {
   return (
     <section id="start" style={{
       padding: '100px 24px',
-      background: 'var(--bg-hero)',
+      background: 'var(--bg-secondary)',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Background decoration */}
+      {/* Background blobs */}
       <div style={{
-        position: 'absolute', top: -80, right: -80,
-        width: 360, height: 360,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(240,208,96,0.15), transparent 70%)',
+        position: 'absolute', top: -100, right: -100,
+        width: 400, height: 400, borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(28,46,80,0.07), transparent 70%)',
         pointerEvents: 'none',
       }} />
       <div style={{
-        position: 'absolute', bottom: -60, left: -60,
-        width: 280, height: 280,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(139,99,71,0.10), transparent 70%)',
+        position: 'absolute', bottom: -80, left: -80,
+        width: 320, height: 320, borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(182,189,200,0.12), transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -58,38 +58,53 @@ export default function StartSection() {
           gap: 24,
           alignItems: 'start',
         }}>
-          {/* Option 1: QR Scan */}
+          {/* QR Scan */}
           <div style={{
-            background: 'var(--bg-card)',
-            border: '1.5px solid var(--border)',
+            background: 'var(--accent)',
             borderRadius: 20,
             padding: '32px 28px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: 20,
-            boxShadow: '0 4px 24px var(--shadow)',
+            boxShadow: '0 8px 32px rgba(28,46,80,0.28)',
           }}>
             <div style={{
               width: 56, height: 56, borderRadius: 16,
-              background: 'rgba(240,208,96,0.18)',
-              border: '1px solid rgba(240,208,96,0.45)',
+              background: 'rgba(255,255,255,0.15)',
+              border: '1px solid rgba(255,255,255,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <QrCode size={26} color="var(--mocha)" />
+              <QrCode size={26} color="#FFFFFF" />
             </div>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>
                 📱 QR로 스캔
               </h3>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+              <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65 }}>
                 스마트폰으로 QR 코드를 스캔하면 모바일에서 바로 손글씨를 업로드할 수 있습니다.
               </p>
             </div>
-            <QRSection />
+            <div style={{
+              background: '#FFFFFF',
+              borderRadius: 14,
+              padding: 12,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 16px rgba(28,46,80,0.20)',
+            }}>
+              <QRCode
+                value="https://jeongwoo-pjw.github.io/mine01/scan/"
+                size={140}
+                fgColor="#1C2E50"
+                bgColor="#FFFFFF"
+                level="M"
+              />
+            </div>
           </div>
 
-          {/* Option 2: Direct Upload */}
+          {/* Direct Upload */}
           <div style={{
             background: 'var(--bg-card)',
             border: '1.5px solid var(--border)',
@@ -103,11 +118,11 @@ export default function StartSection() {
           }}>
             <div style={{
               width: 56, height: 56, borderRadius: 16,
-              background: 'rgba(176,183,195,0.18)',
-              border: '1px solid rgba(176,183,195,0.45)',
+              background: 'rgba(182,189,200,0.18)',
+              border: '1px solid rgba(182,189,200,0.40)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <Upload size={26} color="var(--metal-light)" />
+              <Upload size={26} color="var(--silver)" />
             </div>
             <div style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>
@@ -138,10 +153,10 @@ export default function StartSection() {
             </div>
           </div>
 
-          {/* Option 3: Start from template */}
+          {/* Template Download */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(240,208,96,0.12), rgba(139,99,71,0.08))',
-            border: '1.5px solid rgba(240,208,96,0.45)',
+            background: 'var(--bg-card)',
+            border: '1.5px solid var(--border)',
             borderRadius: 20,
             padding: '32px 28px',
             display: 'flex',
@@ -152,11 +167,11 @@ export default function StartSection() {
           }}>
             <div style={{
               width: 56, height: 56, borderRadius: 16,
-              background: 'rgba(139,99,71,0.15)',
-              border: '1px solid rgba(139,99,71,0.35)',
+              background: 'var(--accent-light)',
+              border: '1px solid rgba(28,46,80,0.18)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <PenLine size={26} color="var(--mocha)" />
+              <PenLine size={26} color="var(--accent)" />
             </div>
             <div style={{ textAlign: 'center' }}>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>

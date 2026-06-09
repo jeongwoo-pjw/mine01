@@ -82,7 +82,7 @@ export default function PricingSection() {
               key={plan.name}
               style={{
                 background: plan.highlight
-                  ? 'linear-gradient(145deg, var(--mocha), #6B4D37)'
+                  ? 'linear-gradient(145deg, #1C2E50, #0F1E38)'
                   : 'var(--bg-card)',
                 border: plan.highlight ? 'none' : '1px solid var(--border)',
                 borderRadius: 20,
@@ -90,7 +90,7 @@ export default function PricingSection() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 0,
-                boxShadow: plan.highlight ? '0 20px 50px rgba(139,99,71,0.30)' : '0 2px 12px var(--shadow)',
+                boxShadow: plan.highlight ? '0 20px 50px rgba(28,46,80,0.32)' : '0 2px 12px var(--shadow)',
                 position: 'relative',
                 overflow: 'hidden',
               }}
@@ -98,8 +98,8 @@ export default function PricingSection() {
               {plan.highlight && (
                 <div style={{
                   position: 'absolute', top: 16, right: 16,
-                  background: 'var(--accent)',
-                  color: 'var(--ink)',
+                  background: '#B6BDC8',
+                  color: '#1C2E50',
                   fontSize: '0.7rem', fontWeight: 800,
                   padding: '3px 10px',
                   borderRadius: 999,
@@ -113,7 +113,7 @@ export default function PricingSection() {
               <div style={{ marginBottom: 20 }}>
                 <div style={{
                   fontSize: '0.82rem', fontWeight: 700,
-                  color: plan.highlight ? 'rgba(237,213,179,0.7)' : 'var(--text-muted)',
+                  color: plan.highlight ? 'rgba(226,232,244,0.65)' : 'var(--text-muted)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.08em',
                   marginBottom: 8,
@@ -124,17 +124,17 @@ export default function PricingSection() {
                   <span style={{
                     fontSize: 'clamp(2rem, 4vw, 2.6rem)',
                     fontWeight: 800,
-                    color: plan.highlight ? '#EDD5B3' : 'var(--text-primary)',
+                    color: plan.highlight ? '#E2E8F4' : 'var(--text-primary)',
                   }}>
                     ₩{plan.price}
                   </span>
-                  <span style={{ fontSize: '0.9rem', color: plan.highlight ? 'rgba(237,213,179,0.6)' : 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '0.9rem', color: plan.highlight ? 'rgba(226,232,244,0.55)' : 'var(--text-muted)' }}>
                     / {plan.period}
                   </span>
                 </div>
                 <p style={{
                   fontSize: '0.88rem',
-                  color: plan.highlight ? 'rgba(237,213,179,0.75)' : 'var(--text-secondary)',
+                  color: plan.highlight ? 'rgba(226,232,244,0.72)' : 'var(--text-secondary)',
                   lineHeight: 1.55,
                 }}>
                   {plan.desc}
@@ -146,15 +146,15 @@ export default function PricingSection() {
                   <li key={f} style={{
                     display: 'flex', alignItems: 'center', gap: 10,
                     fontSize: '0.88rem',
-                    color: plan.highlight ? '#EDD5B3' : 'var(--text-secondary)',
+                    color: plan.highlight ? '#E2E8F4' : 'var(--text-secondary)',
                   }}>
                     <div style={{
                       width: 20, height: 20, borderRadius: '50%',
-                      background: plan.highlight ? 'rgba(240,208,96,0.2)' : 'rgba(240,208,96,0.15)',
+                      background: plan.highlight ? 'rgba(182,189,200,0.20)' : 'rgba(28,46,80,0.08)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       flexShrink: 0,
                     }}>
-                      <Check size={11} color={plan.highlight ? '#F0D060' : 'var(--mocha)'} strokeWidth={2.5} />
+                      <Check size={11} color={plan.highlight ? '#B6BDC8' : 'var(--accent)'} strokeWidth={2.5} />
                     </div>
                     {f}
                   </li>
@@ -164,8 +164,8 @@ export default function PricingSection() {
               <button
                 className={plan.highlight ? '' : 'btn-secondary'}
                 style={plan.highlight ? {
-                  background: 'var(--accent)',
-                  color: 'var(--ink)',
+                  background: '#B6BDC8',
+                  color: '#1C2E50',
                   border: 'none',
                   borderRadius: 12,
                   padding: '14px 24px',

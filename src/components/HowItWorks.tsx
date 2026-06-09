@@ -57,7 +57,6 @@ export default function HowItWorks() {
             const isLast = i === STEPS.length - 1;
             return (
               <div key={step.num} style={{ position: 'relative', padding: '0 16px' }}>
-                {/* Connector line */}
                 {!isLast && (
                   <div style={{
                     position: 'absolute',
@@ -81,7 +80,7 @@ export default function HowItWorks() {
                   position: 'relative',
                   zIndex: 1,
                 }}>
-                  <Icon size={28} color="var(--mocha)" strokeWidth={1.8} />
+                  <Icon size={28} color="var(--accent)" strokeWidth={1.8} />
                   <div style={{
                     position: 'absolute',
                     top: -6, right: -6,
@@ -91,19 +90,20 @@ export default function HowItWorks() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '0.65rem',
                     fontWeight: 800,
-                    color: 'var(--ink)',
+                    color: '#FFFFFF',
                   }}>
                     {step.num.slice(1)}
                   </div>
                 </div>
 
-                <h3 style={{
-                  fontSize: '1.05rem',
-                  fontWeight: 700,
-                  color: 'var(--text-primary)',
-                  marginBottom: 10,
-                }}>
-                  <span style={{ color: 'var(--accent)', fontFamily: 'Caveat, cursive', fontSize: '1.3rem', marginRight: 6 }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10 }}>
+                  <span style={{
+                    color: 'var(--accent)',
+                    fontFamily: 'Caveat, cursive',
+                    fontSize: '1.3rem',
+                    marginRight: 6,
+                    opacity: 0.6,
+                  }}>
                     {step.num}
                   </span>
                   {step.title}
@@ -116,7 +116,6 @@ export default function HowItWorks() {
           })}
         </div>
 
-        {/* CTA in middle */}
         <div style={{ textAlign: 'center', marginTop: 60 }}>
           <a href="#start" className="btn-primary" style={{ fontSize: '1.05rem', padding: '15px 36px' }}>
             <PenLine size={20} />

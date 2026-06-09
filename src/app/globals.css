@@ -2,66 +2,72 @@
 
 /* ─── Color Palette ─────────────────────────────────────────── */
 /*
-  1. CAPPUCCINO FOAM   #EDD5B3  — warm milky cream
-  2. POLISHED METAL    #B0B7C3  — cool metallic silver
-  3. BUTTER YELLOW     #F0D060  — warm golden yellow
-  4. WARM MOCHA        #8B6347  — deep warm brown (depth/anchor)
-  5. MIDNIGHT INK      #2C3445  — deep navy (text / dark bg)
+  1. VANILLA CREAM   #FBF8F3  — 따뜻한 크림화이트 (메인 배경)
+  2. COOL SILVER     #B6BDC8  — 쿨톤 메탈릭 실버 (UI 보조)
+  3. MIDNIGHT BLUE   #1C2E50  — 딥 미드나잇 블루 (포인트)
+  4. STEEL           #6B7B93  — 중간 청회색 (보조 텍스트)
+  5. FROST           #E2E8F4  — 서리빛 연한 블루화이트 (카드/표면)
 */
 
 :root {
-  /* Base Colors */
-  --cappuccino: #EDD5B3;
-  --metal: #B0B7C3;
-  --butter: #F0D060;
-  --mocha: #8B6347;
-  --ink: #2C3445;
+  /* Brand Palette */
+  --cream:     #FBF8F3;
+  --silver:    #B6BDC8;
+  --midnight:  #1C2E50;
+  --steel:     #6B7B93;
+  --frost:     #E2E8F4;
 
-  /* Light Mode */
-  --bg-primary: #FAF6F0;
-  --bg-secondary: #F3EDE4;
-  --bg-card: #FFFFFF;
-  --bg-hero: #EDD5B3;
-  --surface: #EDD5B3;
-  --border: rgba(176, 183, 195, 0.35);
-  --text-primary: #2C3445;
-  --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
-  --accent: #F0D060;
-  --accent-hover: #E8C840;
-  --metal-light: #B0B7C3;
-  --hero-pattern: rgba(139, 99, 71, 0.07);
-  --line-pattern: rgba(176, 183, 195, 0.25);
-  --shadow: rgba(44, 52, 69, 0.10);
-  --shadow-md: rgba(44, 52, 69, 0.15);
-  --foreground: #2C3445;
+  /* Light Mode Tokens */
+  --bg-primary:   #FBF8F3;
+  --bg-secondary: #EFF2F8;
+  --bg-card:      #FFFFFF;
+  --bg-hero:      #EEF2FA;
+  --surface:      #E2E8F4;
+  --border:       rgba(182, 189, 200, 0.40);
+
+  --text-primary:   #1C2E50;
+  --text-secondary: #6B7B93;
+  --text-muted:     #9BA8BB;
+
+  --accent:       #1C2E50;
+  --accent-hover: #263D6A;
+  --accent-light: rgba(28, 46, 80, 0.08);
+
+  --silver-ui:    #B6BDC8;
+  --hero-pattern: rgba(28, 46, 80, 0.045);
+  --line-pattern: rgba(182, 189, 200, 0.28);
+  --shadow:       rgba(28, 46, 80, 0.09);
+  --shadow-md:    rgba(28, 46, 80, 0.16);
+  --foreground:   #1C2E50;
 }
 
 [data-theme="dark"] {
-  --bg-primary: #1C2130;
-  --bg-secondary: #222840;
-  --bg-card: #252D40;
-  --bg-hero: #1E2535;
-  --surface: #2A3350;
-  --border: rgba(176, 183, 195, 0.15);
-  --text-primary: #EDD5B3;
-  --text-secondary: #B0B7C3;
-  --text-muted: #6B7280;
-  --accent: #F0D060;
-  --accent-hover: #F8E080;
-  --metal-light: #8A95A8;
-  --hero-pattern: rgba(237, 213, 179, 0.05);
-  --line-pattern: rgba(176, 183, 195, 0.10);
-  --shadow: rgba(0, 0, 0, 0.35);
-  --shadow-md: rgba(0, 0, 0, 0.50);
-  --foreground: #EDD5B3;
+  --bg-primary:   #0C1628;
+  --bg-secondary: #111F38;
+  --bg-card:      #162443;
+  --bg-hero:      #0F1B30;
+  --surface:      #1A2B4A;
+  --border:       rgba(182, 189, 200, 0.14);
+
+  --text-primary:   #EDF2FB;
+  --text-secondary: #9EB3D4;
+  --text-muted:     #556882;
+
+  --accent:       #5B8FDB;
+  --accent-hover: #7AAFF0;
+  --accent-light: rgba(91, 143, 219, 0.15);
+
+  --silver-ui:    #7A87A0;
+  --hero-pattern: rgba(182, 189, 200, 0.05);
+  --line-pattern: rgba(182, 189, 200, 0.09);
+  --shadow:       rgba(0, 0, 0, 0.35);
+  --shadow-md:    rgba(0, 0, 0, 0.52);
+  --foreground:   #EDF2FB;
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
@@ -71,10 +77,7 @@ body {
 }
 
 /* ─── Notebook / Sprite Pattern ─────────────────────────────── */
-.notebook-bg {
-  position: relative;
-  overflow: hidden;
-}
+.notebook-bg { position: relative; overflow: hidden; }
 .notebook-bg::before {
   content: '';
   position: absolute;
@@ -104,51 +107,33 @@ body {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: rgba(240, 208, 96, 0.20);
+  background: rgba(28, 46, 80, 0.12);
   pointer-events: none;
   z-index: 0;
 }
-
-/* ─── Handwriting SVG Animation ─────────────────────────────── */
-@keyframes write {
-  from { stroke-dashoffset: 1; }
-  to   { stroke-dashoffset: 0; }
-}
-.write-path {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  vector-effect: non-scaling-stroke;
-  animation: write 3s ease forwards;
-  pathLength: 1;
+[data-theme="dark"] .notebook-bg::after {
+  background: rgba(91, 143, 219, 0.12);
 }
 
 /* ─── Custom Scrollbar ───────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb { background: var(--metal-light); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--mocha); }
-
-/* ─── Transitions ────────────────────────────────────────────── */
-.transition-theme {
-  transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-}
+::-webkit-scrollbar-thumb { background: var(--silver-ui); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--midnight); }
 
 /* ─── Glass Card ─────────────────────────────────────────────── */
 .glass-card {
-  background: rgba(255,255,255,0.55);
+  background: rgba(255, 255, 255, 0.60);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   box-shadow: 0 4px 24px var(--shadow);
 }
 [data-theme="dark"] .glass-card {
-  background: rgba(37,45,64,0.70);
+  background: rgba(22, 36, 67, 0.72);
 }
 
-/* ─── Font Gallery Grid ──────────────────────────────────────── */
+/* ─── Font Card ──────────────────────────────────────────────── */
 .font-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -162,10 +147,10 @@ body {
   box-shadow: 0 12px 32px var(--shadow-md);
 }
 
-/* ─── Button Styles ──────────────────────────────────────────── */
+/* ─── Buttons ────────────────────────────────────────────────── */
 .btn-primary {
   background: var(--accent);
-  color: var(--ink);
+  color: #FFFFFF;
   font-weight: 700;
   border-radius: 12px;
   padding: 14px 28px;
@@ -173,17 +158,25 @@ body {
   align-items: center;
   gap: 8px;
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 16px rgba(240,208,96,0.35);
+  box-shadow: 0 4px 16px rgba(28, 46, 80, 0.28);
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  text-decoration: none;
 }
 .btn-primary:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(240,208,96,0.45);
+  box-shadow: 0 8px 24px rgba(28, 46, 80, 0.38);
 }
 .btn-primary:active { transform: translateY(0); }
+
+[data-theme="dark"] .btn-primary {
+  box-shadow: 0 4px 16px rgba(91, 143, 219, 0.30);
+}
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(91, 143, 219, 0.42);
+}
 
 .btn-secondary {
   background: transparent;
@@ -198,19 +191,20 @@ body {
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
   cursor: pointer;
   font-size: 1rem;
+  text-decoration: none;
 }
 .btn-secondary:hover {
   border-color: var(--accent);
-  background: rgba(240, 208, 96, 0.08);
+  background: var(--accent-light);
   transform: translateY(-2px);
 }
 
-/* ─── Section Titles ─────────────────────────────────────────── */
+/* ─── Section Badge ──────────────────────────────────────────── */
 .section-badge {
   display: inline-block;
-  background: rgba(240, 208, 96, 0.20);
-  color: var(--mocha);
-  border: 1px solid rgba(240, 208, 96, 0.40);
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid rgba(28, 46, 80, 0.18);
   border-radius: 999px;
   padding: 4px 14px;
   font-size: 0.78rem;
@@ -220,28 +214,26 @@ body {
   margin-bottom: 12px;
 }
 [data-theme="dark"] .section-badge {
-  color: var(--butter);
+  border-color: rgba(91, 143, 219, 0.25);
 }
 
 /* ─── Cursor Blink ───────────────────────────────────────────── */
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 .cursor-blink {
   display: inline-block;
-  width: 3px;
-  height: 1.1em;
-  background: var(--mocha);
+  width: 3px; height: 1.1em;
+  background: var(--accent);
   border-radius: 2px;
   vertical-align: text-bottom;
   animation: blink 1s step-end infinite;
   margin-left: 2px;
 }
-[data-theme="dark"] .cursor-blink { background: var(--butter); }
 
 /* ─── QR Pulse ───────────────────────────────────────────────── */
 @keyframes qr-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(240,208,96,0.55); }
-  70%  { box-shadow: 0 0 0 14px rgba(240,208,96,0); }
-  100% { box-shadow: 0 0 0 0 rgba(240,208,96,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(28, 46, 80, 0.38); }
+  70%  { box-shadow: 0 0 0 14px rgba(28, 46, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(28, 46, 80, 0); }
 }
 .qr-pulse { animation: qr-pulse 2.2s ease-in-out infinite; }
 
@@ -251,47 +243,22 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 .fade-up { animation: fadeInUp 0.65s ease both; }
-.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-1 { animation-delay: 0.10s; }
 .fade-up-2 { animation-delay: 0.22s; }
 .fade-up-3 { animation-delay: 0.34s; }
 .fade-up-4 { animation-delay: 0.46s; }
 .fade-up-5 { animation-delay: 0.58s; }
 
-/* ─── Steps ──────────────────────────────────────────────────── */
-.step-connector {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transform: translateY(-50%);
-  z-index: 0;
-}
-
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .notebook-bg::after { left: 48px; }
 }
-
-/* Mobile font gallery: 2-col → 1-col */
 @media (max-width: 600px) {
-  .font-grid-2col {
-    grid-template-columns: 1fr !important;
-  }
+  .font-grid-2col { grid-template-columns: 1fr !important; }
 }
-
-/* Responsive hero: stack columns */
 @media (max-width: 768px) {
-  .hero-grid {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-  }
-  .hero-right { display: flex; justify-content: center; }
+  .hero-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
 }
-
-/* Step connector hidden on mobile */
 @media (max-width: 900px) {
   .step-connector-line { display: none !important; }
 }
-

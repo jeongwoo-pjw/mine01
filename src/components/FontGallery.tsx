@@ -26,7 +26,7 @@ const FONTS: Font[] = [
     tags: ['로맨틱', '우아함'],
     downloads: 4821,
     rating: 4.9,
-    color: '#EDD5B3',
+    color: '#1C2E50',
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ const FONTS: Font[] = [
     tags: ['캐주얼', '귀여움'],
     downloads: 3290,
     rating: 4.7,
-    color: '#F0D060',
+    color: '#B6BDC8',
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const FONTS: Font[] = [
     tags: ['클래식', '정갈함'],
     downloads: 2874,
     rating: 4.8,
-    color: '#B0B7C3',
+    color: '#6B7B93',
   },
   {
     id: 4,
@@ -62,7 +62,7 @@ const FONTS: Font[] = [
     tags: ['활기찬', '열정'],
     downloads: 5612,
     rating: 4.6,
-    color: '#8B6347',
+    color: '#1C2E50',
   },
   {
     id: 5,
@@ -74,7 +74,7 @@ const FONTS: Font[] = [
     tags: ['미니멀', '심플'],
     downloads: 1985,
     rating: 4.5,
-    color: '#EDD5B3',
+    color: '#E2E8F4',
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const FONTS: Font[] = [
     tags: ['빈티지', '따뜻함'],
     downloads: 7340,
     rating: 5.0,
-    color: '#F0D060',
+    color: '#1C2E50',
   },
   {
     id: 7,
@@ -98,7 +98,7 @@ const FONTS: Font[] = [
     tags: ['고급스러움', '세련됨'],
     downloads: 3100,
     rating: 4.8,
-    color: '#B0B7C3',
+    color: '#B6BDC8',
   },
   {
     id: 8,
@@ -110,19 +110,19 @@ const FONTS: Font[] = [
     tags: ['한글', '붓터치'],
     downloads: 9210,
     rating: 4.9,
-    color: '#8B6347',
+    color: '#1C2E50',
   },
   {
     id: 9,
     name: 'Daily Memo',
     author: '오채린',
     fontFamily: 'Nanum Pen Script',
-    sample: 'Today\'s Note',
+    sample: "Today's Note",
     sampleKo: '오늘의 메모',
     tags: ['일상', '노트'],
     downloads: 6300,
     rating: 4.7,
-    color: '#EDD5B3',
+    color: '#E2E8F4',
   },
   {
     id: 10,
@@ -134,7 +134,7 @@ const FONTS: Font[] = [
     tags: ['포근함', '일상'],
     downloads: 2450,
     rating: 4.6,
-    color: '#F0D060',
+    color: '#6B7B93',
   },
   {
     id: 11,
@@ -146,7 +146,7 @@ const FONTS: Font[] = [
     tags: ['모던', '트렌디'],
     downloads: 4100,
     rating: 4.8,
-    color: '#B0B7C3',
+    color: '#B6BDC8',
   },
   {
     id: 12,
@@ -216,9 +216,15 @@ export default function FontGallery() {
                 <div>
                   <div style={{
                     display: 'inline-block',
-                    background: `${font.color}28`,
-                    color: font.color === '#F0D060' ? '#8B6347' : font.color === '#B0B7C3' ? '#5a6070' : font.color,
-                    border: `1px solid ${font.color}60`,
+                    background: font.color === '#E2E8F4'
+                      ? 'rgba(226,232,244,0.80)'
+                      : font.color === '#B6BDC8'
+                        ? 'rgba(182,189,200,0.20)'
+                        : 'rgba(28,46,80,0.09)',
+                    color: font.color === '#E2E8F4' || font.color === '#B6BDC8'
+                      ? 'var(--steel)'
+                      : 'var(--midnight)',
+                    border: `1px solid ${font.color}55`,
                     borderRadius: 6,
                     padding: '2px 8px',
                     fontSize: '0.7rem',
