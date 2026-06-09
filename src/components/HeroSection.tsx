@@ -55,7 +55,7 @@ export default function HeroSection() {
               나만의 손글씨를<br />
               <span
                 style={{
-                  background: 'linear-gradient(125deg, var(--midnight) 0%, var(--steel) 100%)',
+                  background: 'linear-gradient(125deg, var(--text-primary) 0%, var(--text-secondary) 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -68,27 +68,24 @@ export default function HeroSection() {
             <p
               className="fade-up fade-up-3"
               style={{
-                fontSize: '1.05rem',
+                fontSize: '0.88rem',
                 color: 'var(--text-secondary)',
-                lineHeight: 1.75,
+                lineHeight: 1.7,
                 marginBottom: 32,
-                maxWidth: 440,
+                maxWidth: 360,
               }}
             >
               손글씨를 스캔하면 AI가 분석하여 나만의 고유한 필기체 폰트를
-              자동 생성합니다. OTF·TTF·웹폰트로 즉시 다운로드하세요.
+              자동 생성합니다.
             </p>
 
             {/* Writing animation preview */}
             <div
-              className="fade-up fade-up-3"
+              className="fade-up fade-up-3 hero-preview-box"
               style={{
-                background: 'var(--bg-card)',
-                border: '1.5px solid var(--border)',
                 borderRadius: 14,
                 padding: '10px 20px 6px',
                 marginBottom: 30,
-                boxShadow: '0 2px 12px var(--shadow)',
                 maxWidth: 360,
               }}
             >
@@ -110,46 +107,26 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Stats */}
-            <div
-              className="fade-up fade-up-5"
-              style={{ display: 'flex', gap: 28, marginTop: 40, flexWrap: 'wrap' }}
-            >
-              {[
-                { val: '12,000+', label: '생성된 폰트' },
-                { val: '98%',     label: 'AI 정확도' },
-                { val: '5분',     label: '평균 완성' },
-              ].map(s => (
-                <div key={s.label}>
-                  <div style={{ fontSize: '1.55rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1 }}>
-                    {s.val}
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 4 }}>
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* ── Right: QR + Upload (나란히) ────────────── */}
           <div
             className="fade-up fade-up-3"
-            style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
           >
             {/* 상단: 두 카드 나란히 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
 
               {/* Card 1 — QR로 바로 시작 */}
               <div style={{
                 background: 'var(--accent)',
-                borderRadius: 20,
-                padding: '24px 20px',
+                borderRadius: 22,
+                padding: '28px 22px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: 14,
-                boxShadow: '0 8px 32px rgba(28,46,80,0.28)',
+                gap: 18,
+                boxShadow: '0 8px 32px var(--shadow-md)',
               }}>
                 <div style={{
                   display: 'flex',
@@ -180,7 +157,7 @@ export default function HeroSection() {
                   <QRCode
                     value="https://jeongwoo-pjw.github.io/mine01/scan/"
                     size={120}
-                    fgColor="#1C2E50"
+                    fgColor="#28273A"
                     bgColor="#FFFFFF"
                     level="M"
                   />
@@ -209,12 +186,12 @@ export default function HeroSection() {
               <div style={{
                 background: 'var(--bg-card)',
                 border: '1.5px solid var(--border)',
-                borderRadius: 20,
-                padding: '24px 20px',
+                borderRadius: 22,
+                padding: '28px 22px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: 14,
+                gap: 18,
                 boxShadow: '0 4px 20px var(--shadow)',
               }}>
                 <div style={{
@@ -238,14 +215,14 @@ export default function HeroSection() {
                   style={{
                     width: '100%',
                     aspectRatio: '1 / 1',
-                    border: `1.5px dashed ${uploadHover ? 'rgba(28,46,80,0.40)' : 'var(--border)'}`,
+                    border: `1.5px dashed ${uploadHover ? 'var(--accent)' : 'var(--border)'}`,
                     borderRadius: 12,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 8,
-                    background: uploadHover ? 'rgba(28,46,80,0.05)' : 'var(--frost)',
+                    background: uploadHover ? 'var(--accent-light)' : 'var(--surface)',
                     cursor: 'pointer',
                     transition: 'border-color 0.22s, background 0.22s',
                     position: 'relative',
@@ -304,15 +281,12 @@ export default function HeroSection() {
             </div>
 
             {/* 하단: 분리선 + 안내 */}
-            <div style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              borderRadius: 14,
-              padding: '14px 20px',
+            <div className="hero-info-box" style={{
+              borderRadius: 18,
+              padding: '16px 22px',
               display: 'flex',
               alignItems: 'center',
-              gap: 12,
-              boxShadow: '0 2px 8px var(--shadow)',
+              gap: 14,
             }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10, flexShrink: 0,

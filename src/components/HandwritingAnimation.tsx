@@ -1,28 +1,22 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-// 감성적인 손글씨 Google Fonts 샘플
-// 한글: Nanum Brush Script, Nanum Pen Script, Single Day
-// 영문: Dancing Script, Sacramento, Caveat, Satisfy, Shadows Into Light
 const SAMPLES = [
-  { text: '봄날의 기억처럼',        font: "'Nanum Brush Script', cursive", size: '1.85rem' },
-  { text: 'My Beautiful Story',   font: "'Dancing Script', cursive",      size: '1.75rem' },
-  { text: '나만의 손글씨체',        font: "'Nanum Pen Script', cursive",   size: '1.8rem'  },
-  { text: 'Write Your Heart',     font: "'Sacramento', cursive",          size: '1.9rem'  },
-  { text: '감성 필기체 폰트',       font: "'Single Day', cursive",         size: '1.75rem' },
-  { text: 'Handcrafted with Love',font: "'Satisfy', cursive",             size: '1.55rem' },
-  { text: '손끝에서 피어나는 글씨', font: "'Nanum Brush Script', cursive", size: '1.4rem'  },
-  { text: 'Memories in Ink',      font: "'Shadows Into Light', cursive",  size: '1.75rem' },
+  { text: '내가 끄적이는대로',          font: "'Grandiflora One', cursive",        size: '2.0rem'  },
+  { text: 'Memories in Ink',          font: "'Shadows Into Light', cursive",      size: '2.1rem'  },
+  { text: '손끝에서 피어나는 글씨',     font: "'Poor Story', cursive",            size: '1.8rem'  },
+  { text: 'Write Your Heart',         font: "'Pinyon Script', cursive",           size: '2.3rem'  },
+  { text: '내가 만드는 나만의 손글씨체', font: "'East Sea Dokdo', cursive",         size: '1.7rem'  },
 ];
 
-const CHAR_MS   = 60;   // 타이핑 속도
-const PAUSE_MS  = 1800; // 완성 후 대기
-const DEL_MS    = 28;   // 지우기 속도
+const CHAR_MS   = 60;
+const PAUSE_MS  = 1800;
+const DEL_MS    = 28;
 
 export default function HandwritingAnimation() {
-  const [idx, setIdx]         = useState(0);
-  const [shown, setShown]     = useState('');
-  const [phase, setPhase]     = useState<'type' | 'pause' | 'erase'>('type');
+  const [idx, setIdx]     = useState(0);
+  const [shown, setShown] = useState('');
+  const [phase, setPhase] = useState<'type' | 'pause' | 'erase'>('type');
 
   const sample = SAMPLES[idx];
 
@@ -55,7 +49,7 @@ export default function HandwritingAnimation() {
   return (
     <div
       style={{
-        height: 72,
+        height: 90,
         display: 'flex',
         alignItems: 'center',
         padding: '0 2px',
@@ -79,7 +73,6 @@ export default function HandwritingAnimation() {
         {shown}
       </span>
 
-      {/* 깜빡이는 커서 */}
       <span
         style={{
           display: 'inline-block',

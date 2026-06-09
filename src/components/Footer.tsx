@@ -1,12 +1,12 @@
 'use client';
-import { PenLine, Code2, Camera, MessageCircle } from 'lucide-react';
+import { Code2, Camera, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer style={{
-      background: '#0D1828',
-      color: '#E2E8F4',
+      background: 'var(--footer-bg)',
+      color: 'var(--footer-text)',
       padding: '60px 24px 36px',
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -18,27 +18,34 @@ export default function Footer() {
         }}>
           {/* Brand */}
           <div>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', marginBottom: 16 }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: 8,
-                background: '#B6BDC8',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            <Link href="/" style={{
+              display: 'inline-block',
+              textDecoration: 'none', marginBottom: 16,
+            }}>
+              <span style={{
+                fontFamily: "'Playwrite NZ Basic Guides', cursive",
+                fontSize: '1.5rem',
+                fontWeight: 300,
+                color: 'var(--footer-text)',
+                letterSpacing: '0.03em',
+                lineHeight: 1,
               }}>
-                <PenLine size={17} color="#1C2E50" strokeWidth={2.5} />
-              </div>
-              <span style={{ fontFamily: 'Caveat, cursive', fontSize: '1.5rem', fontWeight: 700, color: '#E2E8F4' }}>
-                Hand<span style={{ color: '#B6BDC8' }}>Font</span>
+                HANDY
               </span>
             </Link>
-            <p style={{ fontSize: '0.88rem', color: 'rgba(226,232,244,0.55)', lineHeight: 1.7, maxWidth: 240 }}>
+            <p style={{
+              fontSize: '0.88rem',
+              color: 'var(--footer-dim)',
+              lineHeight: 1.7,
+              maxWidth: 240,
+            }}>
               AI로 나만의 손글씨를 폰트로 변환하는 가장 쉬운 방법.
             </p>
 
-            {/* Social icons */}
             <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
               {[
-                { icon: Code2, label: 'GitHub' },
-                { icon: Camera, label: 'Instagram' },
+                { icon: Code2,         label: 'GitHub' },
+                { icon: Camera,        label: 'Instagram' },
                 { icon: MessageCircle, label: 'Twitter' },
               ].map(({ icon: Icon, label }) => (
                 <a
@@ -47,22 +54,22 @@ export default function Footer() {
                   aria-label={label}
                   style={{
                     width: 34, height: 34, borderRadius: 8,
-                    border: '1px solid rgba(182,189,200,0.20)',
+                    border: '1px solid var(--footer-border)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: 'rgba(226,232,244,0.50)',
+                    color: 'var(--footer-dim)',
                     textDecoration: 'none',
                     transition: 'border-color 0.22s, color 0.22s, background 0.22s',
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget as HTMLAnchorElement;
-                    el.style.borderColor = 'rgba(182,189,200,0.55)';
-                    el.style.color = '#E2E8F4';
-                    el.style.background = 'rgba(182,189,200,0.10)';
+                    el.style.borderColor = 'var(--footer-heading)';
+                    el.style.color = 'var(--footer-heading)';
+                    el.style.background = 'rgba(255,255,255,0.06)';
                   }}
                   onMouseLeave={e => {
                     const el = e.currentTarget as HTMLAnchorElement;
-                    el.style.borderColor = 'rgba(182,189,200,0.20)';
-                    el.style.color = 'rgba(226,232,244,0.50)';
+                    el.style.borderColor = 'var(--footer-border)';
+                    el.style.color = 'var(--footer-dim)';
                     el.style.background = 'transparent';
                   }}
                 >
@@ -72,7 +79,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
           {[
             { title: '서비스', links: ['폰트 생성', '폰트 갤러리', '템플릿 다운로드', 'API 문서'] },
             { title: '지원',   links: ['사용 가이드', 'FAQ', '고객 센터', '업데이트 노트'] },
@@ -81,7 +87,7 @@ export default function Footer() {
             <div key={col.title}>
               <h4 style={{
                 fontSize: '0.78rem', fontWeight: 700,
-                color: '#B6BDC8',
+                color: 'var(--footer-heading)',
                 textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 16,
               }}>
                 {col.title}
@@ -93,12 +99,12 @@ export default function Footer() {
                       href="#"
                       style={{
                         fontSize: '0.88rem',
-                        color: 'rgba(226,232,244,0.50)',
+                        color: 'var(--footer-dim)',
                         textDecoration: 'none',
                         transition: 'color 0.22s',
                       }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#E2E8F4'; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(226,232,244,0.50)'; }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--footer-text)'; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--footer-dim)'; }}
                     >
                       {l}
                     </a>
@@ -109,9 +115,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
         <div style={{
-          borderTop: '1px solid rgba(182,189,200,0.12)',
+          borderTop: '1px solid var(--footer-border)',
           paddingTop: 24,
           display: 'flex',
           justifyContent: 'space-between',
@@ -119,10 +124,14 @@ export default function Footer() {
           flexWrap: 'wrap',
           gap: 12,
         }}>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(226,232,244,0.35)' }}>
-            © 2026 HandFont. All rights reserved.
+          <p style={{ fontSize: '0.8rem', color: 'var(--footer-dim)', opacity: 0.7 }}>
+            © 2026 HANDY. All rights reserved.
           </p>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(226,232,244,0.35)', fontFamily: 'Caveat, cursive' }}>
+          <p style={{
+            fontSize: '0.8rem',
+            color: 'var(--footer-dim)', opacity: 0.7,
+            fontFamily: 'Caveat, cursive',
+          }}>
             Made with ✍️ & AI
           </p>
         </div>

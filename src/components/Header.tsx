@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
-import { Sun, Moon, Menu, X, PenLine, MessageSquare } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import ThemeSwitcher from './ThemeSwitcher';
 
@@ -20,12 +20,11 @@ export default function Header() {
     { label: '서비스 소개', href: '#features' },
     { label: '사용 방법',   href: '#how-it-works' },
     { label: '폰트 갤러리', href: '#gallery' },
-    { label: '요금제',      href: '#pricing' },
   ];
 
   const bgScrolled = theme === 'dark'
-    ? 'rgba(12,22,40,0.92)'
-    : 'rgba(251,248,243,0.92)';
+    ? 'rgba(20,18,32,0.92)'
+    : 'rgba(255,255,255,0.92)';
 
   return (
     <header style={{
@@ -42,23 +41,16 @@ export default function Header() {
           justifyContent: 'space-between', height: 68,
         }}>
           {/* ── Logo ─────────────────────────── */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <div style={{
-              width: 36, height: 36, borderRadius: 10,
-              background: 'var(--accent)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(28,46,80,0.22)',
-              transition: 'box-shadow 0.22s',
-            }}>
-              <PenLine size={20} color="#FFFFFF" strokeWidth={2.5} />
-            </div>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <span style={{
-              fontFamily: 'Caveat, cursive',
-              fontSize: '1.55rem', fontWeight: 700,
+              fontFamily: "'Playwrite NZ Basic Guides', cursive",
+              fontSize: '1.5rem',
+              fontWeight: 300,
               color: 'var(--text-primary)',
-              letterSpacing: '-0.01em',
+              letterSpacing: '0.03em',
+              lineHeight: 1,
             }}>
-              Hand<span style={{ color: 'var(--accent)', opacity: 0.75 }}>Font</span>
+              HANDY
             </span>
           </Link>
 
@@ -85,7 +77,6 @@ export default function Header() {
 
           {/* ── Right controls ────────────────── */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {/* Dark / Light toggle */}
             <button
               onClick={toggle}
               aria-label="테마 전환"
@@ -99,9 +90,9 @@ export default function Header() {
               }}
               onMouseEnter={e => {
                 const b = e.currentTarget as HTMLButtonElement;
-                b.style.borderColor = 'rgba(28,46,80,0.30)';
-                b.style.background  = 'rgba(28,46,80,0.05)';
-                b.style.color       = 'var(--text-primary)';
+                b.style.borderColor = 'var(--accent)';
+                b.style.background  = 'var(--accent-light)';
+                b.style.color       = 'var(--accent)';
               }}
               onMouseLeave={e => {
                 const b = e.currentTarget as HTMLButtonElement;
@@ -113,7 +104,6 @@ export default function Header() {
               {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
             </button>
 
-            {/* 시작하기 — desktop only */}
             <a
               href="#start"
               className="nav-desktop btn-primary"
@@ -122,20 +112,8 @@ export default function Header() {
               시작하기
             </a>
 
-            {/* 상담신청 — desktop only */}
-            <a
-              href="#contact"
-              className="nav-desktop btn-secondary"
-              style={{ padding: '8px 16px', fontSize: '0.88rem', borderRadius: 10, gap: 6 }}
-            >
-              <MessageSquare size={15} />
-              상담신청
-            </a>
-
-            {/* 컬러 테마 스위처 */}
             <ThemeSwitcher />
 
-            {/* Hamburger — mobile only */}
             <button
               className="nav-mobile"
               onClick={() => setMenuOpen(v => !v)}
@@ -149,8 +127,8 @@ export default function Header() {
               }}
               onMouseEnter={e => {
                 const b = e.currentTarget as HTMLButtonElement;
-                b.style.borderColor = 'rgba(28,46,80,0.28)';
-                b.style.background  = 'rgba(28,46,80,0.04)';
+                b.style.borderColor = 'var(--accent)';
+                b.style.background  = 'var(--accent-light)';
               }}
               onMouseLeave={e => {
                 const b = e.currentTarget as HTMLButtonElement;
@@ -164,7 +142,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       {menuOpen && (
         <div style={{
           position: 'absolute', top: 68, left: 0, right: 0,
@@ -188,7 +165,7 @@ export default function Header() {
               {l.label}
             </a>
           ))}
-          <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+          <div style={{ display: 'flex', marginTop: 16 }}>
             <a
               href="#start"
               className="btn-primary"
@@ -196,15 +173,6 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
             >
               시작하기
-            </a>
-            <a
-              href="#contact"
-              className="btn-secondary"
-              style={{ flex: 1, justifyContent: 'center', borderRadius: 12, fontSize: '0.92rem', gap: 6 }}
-              onClick={() => setMenuOpen(false)}
-            >
-              <MessageSquare size={14} />
-              상담신청
             </a>
           </div>
         </div>
