@@ -156,8 +156,6 @@ npx gh-pages -d out --dotfiles
 
 ---
 
----
-
 ## 2026-06-10 (추가 개발)
 
 ### 플로팅 액션 버튼(FAB)
@@ -235,6 +233,169 @@ npx gh-pages -d out --dotfiles
 
 ---
 
+## 2026-06-10 (커뮤니티 게시판 + 인증 시스템)
+
+### 개요
+
+기존 랜딩 페이지에 커뮤니티 기능을 추가했습니다. 별도 백엔드 서버 없이 Supabase를 활용하여 인증·데이터·권한 관리를 모두 처리합니다.
+
+**기술 선택 이유**
+
+| 항목 | 선택 | 이유 |
+|------|------|------|
+| DB | Supabase | GitHub Pages 정적 배포 환경에서 별도 서버 불필요 |
+| 인증 | Supabase Auth | 이메일 + OAuth 통합 지원 |
+| 보안 | RLS | 서버 측 권한 강제, 클라이언트 우회 불가 |
+| 소셜 | 카카오 OAuth | 국내 사용자 편의성 |
+
+---
+
+### DB 설계
+
+기존 start04 프로젝트의 Supabase 프로젝트를 공유합니다. 테이블 구조는 그대로 사용하고 사이트만 추가됩니다.
+
+**posts 테이블**
+
+```sql
+CREATE TABLE public.posts (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title        text NOT NULL,
+  content      text NOT NULL,
+  board_type   text NOT NULL DEFAULT 'general'
+               CHECK (board_type IN ('general', 'qna', 'notice')),
+  author_id    uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  author_email text NOT NULL,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now()
+);
+```
+
+**profiles 테이블**
+
+```sql
+CREATE TABLE public.profiles (
+  id       uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  is_admin boolean NOT NULL DEFAULT false
+);
+```
+
+---
+
+### RLS 정책 설계
+
+`board_type` + 로그인 여부 + `is_admin` 조합으로 3가지 게시판의 쓰기 권한을 서버에서 강제합니다.
+
+| 정책 | 명령 | 조건 |
+|------|------|------|
+| `posts_select_all` | SELECT | 누구나 |
+| `posts_insert_general_qna` | INSERT | 로그인 + board_type IN (general, qna) |
+| `posts_insert_notice` | INSERT | 로그인 + board_type = notice + is_admin = true |
+| `posts_update_own` | UPDATE | auth.uid() = author_id |
+| `posts_delete_own` | DELETE | auth.uid() = author_id |
+
+---
+
+### 카카오 OAuth 연동
+
+**연동 과정**
+
+Supabase → 카카오 개발자 콘솔 설정의 흐름은 아래와 같습니다.
+
+```
+Supabase Auth → kauth.kakao.com → accounts.kakao.com/login
+```
+
+**트러블슈팅: KOE205 "잘못된 요청" 오류 (start04에서 해결)**
+
+| 원인 후보 | 결과 |
+|---|---|
+| redirect_uri 불일치 | ✅ 정상 |
+| Client ID 오류 | ✅ 정상 |
+| Client Secret 오류 | ❌ REST API key를 두 곳에 입력 → 수정 |
+| OpenID Connect 비활성화 | ❌ 미활성화 → Kakao 콘솔에서 활성화 |
+| Skip nonce check | ❌ 미설정 → Supabase에서 활성화 |
+| 동의항목 미설정 | ❌ account_email 등 미설정 → 설정 완료 |
+
+OpenID Connect 활성화가 핵심 해결책이었습니다. Supabase Kakao 프로바이더는 OIDC 방식으로 동작하므로 Kakao 콘솔의 OpenID Connect 활성화가 필수입니다.
+
+---
+
+### 라우팅 구조 (정적 빌드 제약)
+
+Next.js `output: 'export'` 환경에서 동적 라우트(`/board/[id]`)는 `generateStaticParams` 없이 빌드할 수 없습니다. 게시글은 사용자가 동적으로 생성하므로 사전 빌드가 불가능합니다.
+
+**해결**: 쿼리 파라미터 방식 채택
+
+```
+/board/post?id=<uuid>   ← 동적 라우트 대신 쿼리 파라미터 사용
+/board/write?type=qna   ← 게시판 타입 전달
+/board/write?id=<uuid>  ← 수정 시 게시글 ID 전달
+```
+
+모든 데이터 로드는 `useEffect` 내부 클라이언트 사이드 fetch로 처리합니다.
+
+---
+
+### useSearchParams Suspense 처리
+
+Next.js App Router에서 `useSearchParams()`는 반드시 `<Suspense>` 바운더리 안에서 사용해야 합니다. 각 페이지를 두 계층으로 분리했습니다.
+
+```tsx
+// 데이터를 실제로 사용하는 내부 컴포넌트
+function BoardContent() {
+  const type = useSearchParams().get('type') ?? 'general'
+  // ...
+}
+
+// 페이지 진입점 — Suspense로 감싸기
+export default function BoardPage() {
+  return (
+    <Suspense fallback={<LoadingView />}>
+      <BoardContent />
+    </Suspense>
+  )
+}
+```
+
+---
+
+### Header Board 드롭다운
+
+기존 단순 링크 구조에서 **Board** 메뉴 항목 + 호버 드롭다운으로 변경했습니다.
+
+- `onMouseEnter/Leave`로 드롭다운 열기/닫기
+- `useRef` + `mousedown` 이벤트로 외부 클릭 시 닫기
+- `ChevronDown` 아이콘이 열림 상태에서 180° 회전
+- 모바일 메뉴에서는 하위 목록으로 표시
+
+---
+
+### 인증 상태에 따른 Header 변화
+
+| 상태 | 버튼 |
+|------|------|
+| 비로그인 | 로그인 버튼 → `/login` |
+| 로그인 | 로그아웃 버튼 → `sb.auth.signOut()` 후 홈으로 이동 |
+
+`useAuth` 훅이 `onAuthStateChange`를 구독하여 탭 간 세션 동기화를 유지합니다.
+
+---
+
+### 최종 페이지 라우트
+
+| 경로 | 설명 | 접근 |
+|------|------|------|
+| `/` | 메인 랜딩 | 전체 |
+| `/login` | 로그인/회원가입 | 전체 (로그인 시 /board로 리다이렉트) |
+| `/board?type=notice` | 공지사항 목록 | 전체 |
+| `/board?type=qna` | Q&A 목록 | 전체 |
+| `/board?type=general` | 자유게시판 목록 | 전체 |
+| `/board/write?type=...` | 게시글 작성 | 로그인 필요 |
+| `/board/write?id=...` | 게시글 수정 | 작성자 본인 |
+| `/board/post?id=...` | 게시글 상세 | 전체 |
+
+---
+
 ### 향후 과제
 
 - [ ] 실제 AI 손글씨 분석 백엔드 연동
@@ -243,3 +404,5 @@ npx gh-pages -d out --dotfiles
 - [ ] 모바일 반응형 레이아웃 개선
 - [ ] 업로드 → 분석 → 다운로드 전체 플로우 구현
 - [ ] FAB 서브버튼 실제 기능 연결 (QR 생성, 파일 업로드, 검색 페이지)
+- [ ] 게시판 검색 기능
+- [ ] 게시글 댓글 기능
